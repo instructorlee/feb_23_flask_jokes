@@ -1,0 +1,24 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+    <table class='table'>
+        <thead>
+            <th>id</th>
+            <th>Joke</th>
+            <th>Punchline</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for row in rows: %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.text }}</td>
+                    <td>{{ row.punchline }}</td>
+                    <th>
+                        <a href='joke/view/{{ row.id }}'>view</a>
+                    </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

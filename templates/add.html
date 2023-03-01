@@ -1,0 +1,20 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+<form class='row justify-content-center' action='/joke/add' method='POST'>
+
+    <div class='col-6'>
+        <label for='text'>Joke:</label>
+        <input type='text' name='text'>
+    </div>
+
+    <div class='col-6'>
+        <label for='punchline'>Punchline:</label>
+        <input type='text' name='punchline'>
+    </div>
+
+    <div class='col-12 text-center'>
+        <input class='btn btn-success' type='submit' value='Add Joke'>
+    </div>
+</form>
+{% endblock %}
