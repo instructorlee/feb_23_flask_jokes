@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 
-from classes.joke import Joke
-Joke.load()
+from models.joke import Joke
 
 app = Flask(__name__)
 app.secret_key = 'abc123!%&'
@@ -19,7 +18,7 @@ def dashboard():
 def view_joke(id):
     return render_template('view.html', joke=Joke.get_by_id(id))
 
-@app.route('/joke/add')
+@app.route('/joke/add') # default == GET
 def get_add_joke_form():
     return render_template('add.html')
 
@@ -27,6 +26,11 @@ def get_add_joke_form():
 def add_joke():
     Joke.create(request.form['text'], request.form['punchline'])
     flash('Your Joke has been added.')
+    return redirect('/dashboard')
+
+@app.route('/joke/delete/<int:id>') # default == GET
+def delete_joke(id):
+    Joke.delete(id)
     return redirect('/dashboard')
 
 @app.errorhandler(404)
