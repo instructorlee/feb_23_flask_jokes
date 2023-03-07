@@ -15,11 +15,13 @@
                     <td>{{ row.text }}</td>
                     <td>{{ row.punchline }}</td>
                     <th>
-                        <a href='joke/view/{{ row.id }}'>view</a>
+                        <a href='joke/{{ row.id }}'>view</a>
                         <a href='joke/delete/{{ row.id }}'>delete</a>
+                        <a href='joke/update/{{ row.id }}'>update</a>
                     </th>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="/joke/add">Add Joke</a>
 {% endblock %}

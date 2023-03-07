@@ -1,0 +1,22 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+<form class='row justify-content-center' action='/joke/update' method='POST'>
+
+    <input type='hidden' name='id' value='{{ joke.id }}'>
+
+    <div class='col-6'>
+        <label for='text'>Joke:</label>
+        <input type='text' name='text' value='{{ joke.text }}'>
+    </div>
+
+    <div class='col-6'>
+        <label for='punchline'>Punchline:</label>
+        <input type='text' name='punchline' value='{{ joke.punchline }}'>
+    </div>
+
+    <div class='col-12 text-center'>
+        <input class='btn btn-success' type='submit' value='Update Joke'>
+    </div>
+</form>
+{% endblock %}

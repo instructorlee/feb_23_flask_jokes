@@ -1,4 +1,4 @@
-from config.mysqlconnection import connectToMySQL
+from app.config.mysqlconnection import connectToMySQL
 from datetime import date
 
 class Joke:
@@ -65,23 +65,40 @@ class Joke:
         return [cls(result) for result in results] # List Comprehension
         
     @classmethod
-    def create(cls, text, punchline):
+    def create(cls, data):
 
-        new_joke = cls({
-            'date_added': date.today(),
-            'text': text,
-            'punchline': punchline
-        })
+        query = """
+            INSERT INTO
 
-        cls.save()
+                jokes
+                
+            (text, punchline)
+            
+            VALUES
+            (%(text)s, %(punchline)s)
+            ;
+        """
 
-        return new_joke
+        return connectToMySQL(cls.dB).query_db(query, data)
 
     @classmethod
-    def update(cls, id, text, punchline):
-         Joke.jokes[id - 1].text = text
-         Joke.jokes[id - 1].punchline = punchline
-         cls.save()
+    def update(cls, data):
+
+        query = """
+            UPDATE
+
+                jokes
+                
+            SET
+                text=%(text)s,
+                punchline=%(punchline)s
+
+            WHERE
+                id=%(id)s
+            ;
+        """
+
+        return connectToMySQL(cls.dB).query_db(query, data)
 
     @classmethod
     def delete(cls, id):
