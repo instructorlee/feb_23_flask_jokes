@@ -9,19 +9,16 @@
             <th></th>
         </thead>
         <tbody>
-            {% for joke in rows: %}
+            {% for joke in user.jokes: %}
                 <tr>
                     <td>{{ joke.id }}</td>
                     <td>{{ joke.text }}</td>
                     <td></td>
-
-                    <td>
-                        {% if joke.user_id == session['user_id'] %}
-                            <a href='joke/{{ joke.id }}'>view</a>
-                            <a href='joke/delete/{{ joke.id }}'>delete</a>
-                            <a href='joke/update/{{ joke.id }}'>update</a>
-                        {% endif %}
-                    </td>
+                    <th>
+                        <a href='joke/{{ joke.id }}'>view</a>
+                        <a href='joke/delete/{{ joke.id }}'>delete</a>
+                        <a href='joke/update/{{ joke.id }}'>update</a>
+                    </th>
                 </tr>
             {% endfor %}
         </tbody>

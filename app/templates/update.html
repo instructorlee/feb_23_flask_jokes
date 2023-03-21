@@ -1,22 +1,57 @@
 {% extends "base_template.html" %}
 
 {% block content %}
+<div class='row'>
+    <div class='col-12'>
+        <h1>Update Joke</h1>
+    </div>
+</div>
+
 <form class='row justify-content-center' action='/joke/update' method='POST'>
 
     <input type='hidden' name='id' value='{{ joke.id }}'>
 
     <div class='col-6'>
-        <label for='text'>Joke:</label>
-        <input type='text' name='text' value='{{ joke.text }}'>
+        <label for='joke'>Joke:</label>
+        <input type='text' name='joke' value="{{joke.text}}">
     </div>
 
     <div class='col-6'>
-        <label for='punchline'>Punchline:</label>
-        <input type='text' name='punchline' value='{{ joke.punchline }}'>
-    </div>
-
-    <div class='col-12 text-center'>
         <input class='btn btn-success' type='submit' value='Update Joke'>
     </div>
 </form>
+
+<div class='row mt-5'>
+    <div class='col-6'>
+        <h2>Punchlines</h2>
+    
+        <ul>
+            {% for punchline in joke.punchlines %}
+                <li>
+                    <a class="text-danger" href="/joke/remove-punchline/{{ punchline.id }}">X</a>
+                    {{ punchline.text }}
+                 </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class='col-6'>
+        <h3>Add Punchline</h3>
+
+        <form class='row' action='/joke/add-punchline' method='POST'>
+    
+            <input type='hidden' name='joke_id' value='{{ joke.id }}'>
+    
+            <div class='col-6'>
+                <textarea name='text'></textarea>
+            </div>
+    
+            <div class='col-12 mt-2'>
+                <input class='btn btn-success' type='submit' value='Add Punchline'>
+            </div>
+        </form>
+    </div>
+
+</div>
+
 {% endblock %}

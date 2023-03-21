@@ -1,20 +1,15 @@
 from app.config.mysqlconnection import connectToMySQL
-from app.models.punchline import Punchline
+from datetime import date
 
-class Joke:
+class Punchline:
 
     dB = 'z_jokes'
 
     def __init__(self, joke_data):
         
         self.id = joke_data['id']
-        self.user_id = joke_data['user_id']
-        self.date_added = joke_data['date_added']
         self.text = joke_data['text']
-
-        #self.punchline = joke_data['punchline']
-
-        self.punchlines = []
+        self.joke_id = joke_data['joke_id']
 
     # class level method
 
@@ -25,34 +20,15 @@ class Joke:
             SELECT 
                 * 
             FROM 
-                jokes
-
-            LEFT JOIN punchlines ON punchlines.joke_id = jokes.id
+                punchlines
 
             WHERE 
-                jokes.id=%(id)s
+                id=%(id)s
                 ;
         """
 
         results = connectToMySQL(cls.dB).query_db(query, { 'id': id })
-
-        if results:
-            joke = cls(results[0])
-            
-            for result in results:
-                joke.punchlines.append(Punchline({
-                    'id': result['punchlines.id'],
-                    'text': result['punchlines.text'],
-                    'joke_id': joke.id
-                }))
-
-            return joke
-
-        return None
-
-        
-
-        # return cls(results[0]) if results else None # double check that something was found
+        return cls(results[0]) if results else None # double check that something was found
     
     @classmethod
     def get_all(cls):
@@ -61,7 +37,7 @@ class Joke:
             SELECT 
                 * 
             FROM 
-            z_jokes.jokes;
+             punchlines;
         """
 
         results = connectToMySQL(cls.dB).query_db(query)
@@ -77,19 +53,18 @@ class Joke:
 
         return [cls(result) for result in results] # List Comprehension
         
-    
     @classmethod
     def create(cls, data):
 
         query = """
             INSERT INTO
 
-                jokes
+                punchlines
                 
-            (text, punchline, user_id)
+            (text, joke_id)
             
             VALUES
-            (%(text)s, %(punchline)s, %(user_id)s)
+            (%(text)s, %(joke_id)s)
             ;
         """
 
@@ -101,11 +76,10 @@ class Joke:
         query = """
             UPDATE
 
-                jokes
+                punchlines
                 
             SET
-                text=%(text)s,
-                punchline=%(punchline)s
+                text=%(text)s
                 
             WHERE
                 id=%(id)s
@@ -119,7 +93,7 @@ class Joke:
         
         query = """
         DELETE FROM 
-            z_jokes.jokes
+            punchlines
 
         WHERE
             id=%(id)s
