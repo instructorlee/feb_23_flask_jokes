@@ -1,11 +1,19 @@
 {% extends "base_template.html" %}
 
 {% block content %}
-<form class='row justify-content-center' action='/joke/add' method='POST'>
+<form 
+    class='row justify-content-center' 
+    action='/joke/add' 
+    method='POST'
+    enctype='multipart/form-data'
+    >
 
     <div class='col-6'>
         <label for='text'>Joke:</label>
         <input type='text' name='text'>
+    </div>
+    <div class='col-6'>
+        <input type='file' name='file'>
     </div>
 
     <div class='col-6'>

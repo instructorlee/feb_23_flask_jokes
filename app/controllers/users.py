@@ -35,7 +35,7 @@ def login():
     user = User.get_by_email(request.form['email_address'])
 
     if user == None or bcrypt.check_password_hash(user.password, request.form['password']) == False:
-        flash("Invalid Credentials")
+        flash("Invalid Credentials", 'login')
         return redirect('/')
 
     session['user_id'] = user.id

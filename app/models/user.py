@@ -10,12 +10,13 @@ class User:
 
     dB = 'z_jokes'
 
-    def __init__(self, joke_data):
+    def __init__(self, data):
         
-        self.id = joke_data['id']
-        self.text = joke_data['last_name']
-        self.joke_id = joke_data['email_address']
-        self.password = joke_data['password']
+        self.id = data['id']
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+        self.email_address = data['email_address']
+        self.password = data['password']
 
         self.jokes = []
 
@@ -66,7 +67,13 @@ class User:
         """
 
         results = connectToMySQL(cls.dB).query_db(query, { 'email_address': email_address })
-        return cls(results[0]) if results else None # double check that something was found
+        
+        if not results:
+            return None
+        
+        return cls(results[0])
+        
+        #return cls(results[0]) if results else None # double check that something was found
 
     @classmethod
     def get_all(cls):

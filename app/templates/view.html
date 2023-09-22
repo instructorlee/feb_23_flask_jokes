@@ -2,5 +2,17 @@
 
 {% block content %}
     joke: {{joke.text}}
-    punchline: {{joke.punchline}}
+    <h4>Users who liked this joke?</h4>
+    <ul>
+    {% for user in joke.liked_by %}
+        <li>{{user.first_name}} {{user.last_name}}</li>
+    {% endfor%}
+    </ul>
+    <img src="/uploads" alt="POP"/>
+
+    {% if joke.is_liked_by(session['user_id']) != True  %}
+        <a href='/joke/like/{{ joke.id }}'>Like</a>
+    {% else %}
+        <a href='/joke/unlike/{{ joke.id }}'>Unlike</a>
+    {% endif %}
 {% endblock %}

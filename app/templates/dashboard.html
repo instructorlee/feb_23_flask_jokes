@@ -3,7 +3,7 @@
 {% block content %}
     <table class='table'>
         <thead>
-            <th>id</th>
+            <th>Likes</th>
             <th>Joke</th>
             <th># Punchlines</th>
             <th></th>
@@ -11,13 +11,20 @@
         <tbody>
             {% for joke in rows: %}
                 <tr>
-                    <td>{{ joke.id }}</td>
+                    <td>{{ joke.likes_count }}</td>
                     <td>{{ joke.text }}</td>
                     <td></td>
 
                     <td>
+                        <a href='joke/{{ joke.id }}'>view</a>
+                        
+                        {% if joke.is_liked_by_current_user != True  %}
+                            <a href='/joke/like/{{ joke.id }}'>Like</a>
+                        {% else %}
+                            <a href='/joke/unlike/{{ joke.id }}'>Unlike</a>
+                        {% endif %}
+
                         {% if joke.user_id == session['user_id'] %}
-                            <a href='joke/{{ joke.id }}'>view</a>
                             <a href='joke/delete/{{ joke.id }}'>delete</a>
                             <a href='joke/update/{{ joke.id }}'>update</a>
                         {% endif %}

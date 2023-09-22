@@ -13,12 +13,14 @@
     </head>
     <body>
         <div class='container'>
-            <div class='row'>
-                <div class='col-12 text-right'>
-                    <a href='/user/logout' class='btn btn-small btn-info'>Logout</a>
-                    <a href='/joke/my-jokes' class = 'btn btn-small btn-success'>My Jokes</a>
+            {% if session['user_id'] != None %}
+                <div class='row'>
+                    <div class='col-12 text-right'>
+                        <a href='/user/logout' class='btn btn-small btn-info'>Logout</a>
+                        <a href='/joke/my-jokes' class = 'btn btn-small btn-success'>My Jokes</a>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class='row'>
                 <div class='col-12'>
                     {% with messages = get_flashed_messages() %}
